@@ -6,7 +6,11 @@ jobs:
     container: gradle:6-jdk11
     steps:
       - name: Clone down repository
-        uses: actions/checkout@v4       
+        uses: actions/checkout@v4
+        with:
+          # super-linter needs the full git history to get the
+          # list of files that changed across commits
+          fetch-depth: 0       
       - name: Build application
         run: ci/build-app.sh
       - name: Test
@@ -27,7 +31,7 @@ jobs:
           name: code
           path: .
       - name: run linting
-        uses: super-linter/super-linter/slim@v7 
+        uses: super-linter/super-linter/slim@v7.3.0
         env:
           DEFAULT_BRANCH: main
           # To report GitHub Actions status checks
